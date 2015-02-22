@@ -1,0 +1,22 @@
+{
+  "name": "readable-proxy",
+  "version": "0.0.1",
+  "description": "Node service attempting to fetch readable contents from any URL.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "readable",
+    "readability",
+    "fetch"
+  ],
+  "author": "Nicolas Perriault <nperriault@mozilla.com>",
+  "license": "MPL",
+  "dependencies": {
+    "bluebird": "^2.9.12",
+    "express": "^4.11.2",
+    "phantomjs": "^1.9.15"
+  }
+}
