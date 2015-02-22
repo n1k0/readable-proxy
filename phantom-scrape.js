@@ -18,7 +18,15 @@ page.open(url, function(status) {
   }
   page.injectJs("vendor/Readability.js");
   json(page.evaluate(function(url) {
-    return new Readability(document.location.href, document).parse();
+    var location = document.location;
+    var uri = {
+      spec: location.href,
+      host: location.host,
+      prePath: location.protocol + "//" + location.host, // TODO This is incomplete, needs username/password and port
+      scheme: location.protocol.substr(0, location.protocol.indexOf(":")),
+      pathBase: location.protocol + "//" + location.host + location.pathname.substr(0, location.pathname.lastIndexOf("/") + 1)
+    };
+    return new Readability(uri, document).parse();
   }, url));
   phantom.exit();
 });
