@@ -28,7 +28,7 @@ app.get("/get", function(req, res) {
   scrape(url).then(function(result) {
     res.json(result);
   }).catch(function(err) {
-    res.status(500).json({error: err.message});
+    res.status(500).json(err);
   });
 });
 

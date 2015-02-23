@@ -2,8 +2,12 @@ var system = require("system");
 var page = require("webpage").create();
 var url = system.args[1];
 
-function json(o) {
-  console.log(JSON.stringify(o, null, 2));
+// Prevent page js errors to break JSON output
+// XXX: should we log these instead?
+phantom.onError = page.onError = function(){};
+
+function json(object) {
+  console.log(JSON.stringify(object, null, 2));
 }
 
 if (!url) {
@@ -13,7 +17,7 @@ if (!url) {
 
 page.open(url, function(status) {
   if (status !== "success") {
-    json({error: "Unable to open " + url});
+    json({error: "Unable to access " + url});
     return phantom.exit();
   }
   page.injectJs("vendor/Readability.js");
@@ -26,7 +30,11 @@ page.open(url, function(status) {
       scheme: location.protocol.substr(0, location.protocol.indexOf(":")),
       pathBase: location.protocol + "//" + location.host + location.pathname.substr(0, location.pathname.lastIndexOf("/") + 1)
     };
-    return new Readability(uri, document).parse();
+    try {
+      return new Readability(uri, document).parse();
+    } catch (err) {
+      return {error: err};
+    }
   }, url));
   phantom.exit();
 });

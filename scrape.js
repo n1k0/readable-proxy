@@ -11,10 +11,19 @@ module.exports = function scrape(url) {
       if (err) {
         return reject(err);
       }
+      var response, error;
       try {
-        fulfill(JSON.parse(stdout));
+        response = JSON.parse(stdout);
       } catch (e) {
-        reject(new Error("Unable to parse JSON proxy response."));
+        error = "Unable to parse JSON proxy response.";
+      }
+      if (response && response.error) {
+        error = response.error;
+      }
+      if (error) {
+        reject({error: error});
+      } else {
+        fulfill(response);
       }
     });
   });
