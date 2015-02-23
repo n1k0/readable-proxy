@@ -2,22 +2,25 @@ var system = require("system");
 var page = require("webpage").create();
 var url = system.args[1];
 
-function json(o) {
-  console.log(JSON.stringify(o, null, 2));
+/**
+ * Encode the passed object into JSON and output it to the standard output.
+ **/
+function output(payload) {
+  console.log(JSON.stringify(payload, null, 2));
 }
 
 if (!url) {
-  json({error: "Missing url"});
+  output({error: "Missing url"});
   phantom.exit();
 }
 
 page.open(url, function(status) {
   if (status !== "success") {
-    json({error: "Unable to open " + url});
+    output({error: "Unable to open " + url});
     return phantom.exit();
   }
   page.injectJs("vendor/Readability.js");
-  json(page.evaluate(function(url) {
+  output(page.evaluate(function(url) {
     var location = document.location;
     var uri = {
       spec: location.href,
