@@ -1,8 +1,37 @@
 var scrape = require("./scrape");
 var express = require("express");
 var pkgInfo = require("./package.json");
+var html2md = require("html-md");
+var markdown = require("markdown");
 
 var app = express();
+
+/**
+ * Casts a qs string arg into an actual boolean.
+ * @param  {String} arg The query string arg.
+ * @return {Boolean}
+ */
+function boolArg(queryParam) {
+  if (!queryParam) return false;
+  return ["1", "on", "true", "yes", "y"].indexOf(queryParam.toLowerCase()) !== -1;
+}
+
+/**
+ * Takes a result object and replace native html contents with a safer sanitized
+ * version.
+ * @param  {Object} resultObject
+ * @return {Object}
+ */
+function sanitizeResult(resultObject) {
+  try {
+    var sanitized = markdown.parse(html2md(resultObject.content));
+    resultObject.content = sanitized;
+    resultObject.length = sanitized.length;
+    return resultObject;
+  } catch (err) {
+    throw {error: "Failed HTML sanitization:" + (err || "Unknown reason.")};
+  }
+}
 
 app.use(function(req, res, next) {
   res.header("Content-Type", "application/json");
@@ -21,12 +50,12 @@ app.get("/", function(req, res) {
 });
 
 app.get("/get", function(req, res) {
-  var url = req.query.url;
+  var url = req.query.url, sanitize = boolArg(req.query.sanitize);
   if (!url) {
     return res.status(400).json({error: "Missing url parameter"});
   }
   scrape(url).then(function(result) {
-    res.json(result);
+    res.json(sanitize ? sanitizeResult(result) : result);
   }).catch(function(err) {
     res.status(500).json(err);
   });

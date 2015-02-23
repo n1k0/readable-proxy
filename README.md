@@ -23,6 +23,33 @@ Note about CORS: by design, the server will allow any origin to access it, so br
 Usage
 -----
 
+### `GET /get`
+
+#### Required parameters
+
+- `url`: The URL to retrieve retrieve readable contents from, eg. `https://nicolas.perriault.net/code/2013/get-your-frontend-javascript-code-covered/`.
+
+#### Optional parameters
+
+- `sanitize`: A *boolean string* to enable HTML sanitization (valid truthy boolean strings: "1", "on", "true", "yes", "y"; everything else will be considered falsy):
+
+**Note:** Enabling contents sanitization loses Readability.js specific HTML semantics, though is probably safer for users if you plan to publish retrieved contents on a public website.
+
+#### Example
+
+Content sanitization enabled:
+
+    $ curl http://0.0.0.0:3000/get\?sanitize=y&url\=https://nicolas.perriault.net/code/2013/get-your-frontend-javascript-code-covered/
+    {
+      "byline":"Nicolas Perriault —",
+      "content":"<p><strong>So finally you&#39;re <a href=\"https://nicolas.perriault.net/code/2013/testing-frontend-javascript-code-using-mocha-chai-and-sinon/\">testing",
+      "length":2867,
+      "title":"Get your Frontend JavaScript Code Covered | Code",
+      "uri":"https://nicolas.perriault.net/code/2013/get-your-frontend-javascript-code-covered/"
+    }
+
+Content sanitization disabled (default):
+
     $ curl http://0.0.0.0:3000/get\?url\=https://nicolas.perriault.net/code/2013/get-your-frontend-javascript-code-covered/
     {
       "byline":"Nicolas Perriault —",
