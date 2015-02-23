@@ -12,7 +12,12 @@ app.use(function(req, res, next) {
 });
 
 app.get("/", function(req, res) {
-  res.json({name: "moz-readable", version: pkgInfo.version});
+  res.json({
+    name: pkgInfo.name,
+    documentation: "https://github.com/n1k0/readable-proxy/blob/master/README.md",
+    description: pkgInfo.description,
+    version: pkgInfo.version
+  });
 });
 
 app.get("/get", function(req, res) {
