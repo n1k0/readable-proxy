@@ -6,22 +6,22 @@ var url = system.args[1];
 // XXX: should we log these instead?
 phantom.onError = page.onError = function(){};
 
-function json(object) {
+function outputJSON(object) {
   console.log(JSON.stringify(object, null, 2));
 }
 
 if (!url) {
-  json({error: "Missing url"});
+  outputJSON({error: "Missing url"});
   phantom.exit();
 }
 
 page.open(url, function(status) {
   if (status !== "success") {
-    json({error: "Unable to access " + url});
+    outputJSON({error: "Unable to access " + url});
     return phantom.exit();
   }
   page.injectJs("vendor/Readability.js");
-  json(page.evaluate(function(url) {
+  outputJSON(page.evaluate(function(url) {
     var location = document.location;
     var uri = {
       spec: location.href,
