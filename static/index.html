@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Readability.js test page</title>
+  <style>
+  body {
+    background-color: #ffe;
+    font-size: 18px;
+  }
+  form { margin: 1em 0; }
+  input { font-size: 16px; }
+  iframe {
+    width: 49%;
+    height: 640px;
+    background: #fff;
+  }
+  iframe body {
+    font-size: 22px;
+  }
+  </style>
+</head>
+<body>
+  <h1>Readability.js test page</h1>
+  <form id="form">
+    <p><label>URL
+      <input type="url" id="url" size="120" placeholder="http://">
+    </label></p>
+    <p><label>
+      <input type="checkbox" id="sanitize"> Sanitize output
+    </label></p>
+    <input type="submit">
+  </form>
+  <iframe id="source"></iframe>
+  <iframe id="target"></iframe>
+  <script>
+    var q = document.querySelector.bind(document);
+
+    function injectReadableContents(url, sanitize, target) {
+      var req = new XMLHttpRequest();
+      req.open("GET", "/api/get?sanitize=" + (sanitize ? "yes" : "no") + "&url=" + encodeURIComponent(url), false);
+      req.send(null);
+      target.contentDocument.body.innerHTML = JSON.parse(req.responseText).content;
+    }
+
+    q("form").addEventListener("submit", function(event) {
+      event.preventDefault();
+      var url = q("#url").value;
+      q("#source").src = url;
+      injectReadableContents(url, q("#sanitize").checked, q("#target"));
+    });
+  </script>
+</body>
+</html>

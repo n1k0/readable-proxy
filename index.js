@@ -5,6 +5,7 @@ var html2md = require("html-md");
 var markdown = require("markdown");
 
 var app = express();
+app.use(express.static('static'));
 
 /**
  * Casts a qs string arg into an actual boolean.
@@ -40,7 +41,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.get("/", function(req, res) {
+app.get("/api", function(req, res) {
   res.json({
     name: pkgInfo.name,
     documentation: "https://github.com/n1k0/readable-proxy/blob/master/README.md",
@@ -49,7 +50,7 @@ app.get("/", function(req, res) {
   });
 });
 
-app.get("/get", function(req, res) {
+app.get("/api/get", function(req, res) {
   var url = req.query.url, sanitize = boolArg(req.query.sanitize);
   if (!url) {
     return res.status(400).json({error: "Missing url parameter"});

@@ -1,26 +1,34 @@
 var system = require("system");
 var page = require("webpage").create();
 var url = system.args[1];
+var readabilityPath = system.args[2];
 
 // Prevent page js errors to break JSON output
 // XXX: should we log these instead?
 phantom.onError = page.onError = function(){};
+
+function exitWithError(message) {
+  outputJSON({error: message});
+  phantom.exit();
+}
 
 function outputJSON(object) {
   console.log(JSON.stringify(object, null, 2));
 }
 
 if (!url) {
-  outputJSON({error: "Missing url"});
-  phantom.exit();
+  exitWithError("Missing url arg.");
+} else if (!readabilityPath) {
+  exitWithError("Missing readabilityPath arg.");
 }
 
 page.open(url, function(status) {
   if (status !== "success") {
-    outputJSON({error: "Unable to access " + url});
-    return phantom.exit();
+    return exitWithError("Unable to access " + url);
   }
-  page.injectJs("vendor/Readability.js");
+  if (!page.injectJs(readabilityPath)) {
+    exitWithError("Couldn't inject " + readabilityPath);
+  }
   outputJSON(page.evaluate(function(url) {
     var location = document.location;
     var uri = {
