@@ -78,6 +78,11 @@ Content sanitization disabled (default):
       "uri":"https://nicolas.perriault.net/code/2013/get-your-frontend-javascript-code-covered/"
     }
 
+Tests
+-----
+
+    $ npm test
+
 License
 -------
 
