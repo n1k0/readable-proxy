@@ -3,52 +3,62 @@
 <head>
   <meta charset="utf-8">
   <title>Readability.js test page</title>
-  <style>
-  body {
-    background-color: #ffe;
-    font-size: 18px;
-  }
-  form { margin: 1em 0; }
-  input { font-size: 16px; }
-  iframe {
-    width: 49%;
-    height: 640px;
-    background: #fff;
-  }
-  iframe body {
-    font-size: 22px;
-  }
-  </style>
+  <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-  <h1>Readability.js test page</h1>
-  <form id="form">
-    <p><label>URL
-      <input type="url" id="url" size="120" placeholder="http://">
-    </label></p>
-    <p><label>
-      <input type="checkbox" id="sanitize"> Sanitize output
-    </label></p>
-    <input type="submit">
-  </form>
-  <iframe id="source"></iframe>
-  <iframe id="target"></iframe>
-  <script>
-    var q = document.querySelector.bind(document);
-
-    function injectReadableContents(url, sanitize, target) {
-      var req = new XMLHttpRequest();
-      req.open("GET", "/api/get?sanitize=" + (sanitize ? "yes" : "no") + "&url=" + encodeURIComponent(url), false);
-      req.send(null);
-      target.contentDocument.body.innerHTML = JSON.parse(req.responseText).content;
-    }
-
-    q("form").addEventListener("submit", function(event) {
-      event.preventDefault();
-      var url = q("#url").value;
-      q("#source").src = url;
-      injectReadableContents(url, q("#sanitize").checked, q("#target"));
-    });
-  </script>
+  <div class="container-fluid">
+    <div class="page-header">
+      <h1>Readability.js <small>test page</small></h1>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <form class="form-horizontal" id="form">
+          <div class="form-group">
+            <label class="col-sm-1 control-label">URL</label>
+            <div class="col-sm-11">
+              <input type="url" class="form-control" id="url" placeholder="http://">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-1 col-sm-11">
+              <div class="checkbox">
+                <label><input type="checkbox" id="sanitize">Sanitize output</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-1 col-sm-10">
+              <input class="btn btn-info" type="submit">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-6">
+        <table class="table table-striped">
+          <tr><th>Title</th><td id="title"></td></tr>
+          <tr><th>Dir</th><td id="dir"></td></tr>
+          <tr><th>Byline</th><td id="byline"></td></tr>
+          <tr><th>Length</th><td id="length"></td></tr>
+          <tr><th>Excerpt</th><td id="excerpt"></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">Original</div>
+          <iframe id="source"></iframe>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">Readable</div>
+          <iframe id="target"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="main.js"></script>
 </body>
 </html>

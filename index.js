@@ -5,7 +5,8 @@ var html2md = require("html-md");
 var markdown = require("markdown");
 
 var app = express();
-app.use(express.static('static'));
+app.use(express.static("static"));
+app.use(express.static("node_modules/bootstrap/dist/css"));
 
 /**
  * Casts a qs string arg into an actual boolean.

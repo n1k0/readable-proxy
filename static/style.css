@@ -1,0 +1,9 @@
+iframe {
+  border: none;
+  width: 100%;
+  height: 640px;
+  background: #fff;
+}
+iframe body {
+  font-size: 22px;
+}

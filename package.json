@@ -16,6 +16,7 @@
   "license": "MPL",
   "dependencies": {
     "bluebird": "^2.9.12",
+    "bootstrap": "^3.3.2",
     "express": "^4.11.2",
     "html-md": "^3.0.2",
     "markdown": "^0.5.0",
