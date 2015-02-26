@@ -1,1 +1,1 @@
-require("server").serve();
+require("./server").serve();
