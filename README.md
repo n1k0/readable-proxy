@@ -34,7 +34,7 @@ Usage
 
 Just head to `http://localhost:3000/`, enter some URL and start enjoying both original and readable renderings side by side.
 
-![](https://s3.amazonaws.com/f.cl.ly/items/1L0E3W2U3N0Y25111y2i/Screen%20Shot%202015-02-24%20at%2013.31.10.png)
+![](https://s3.amazonaws.com/f.cl.ly/items/0H2X0o1V2Y240u3L1b06/Screen%20Shot%202015-02-26%20at%2012.33.15.png)
 
 ### REST/JSON API
 
