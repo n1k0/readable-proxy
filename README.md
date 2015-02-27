@@ -1,6 +1,8 @@
 readable-proxy
 ==============
 
+[![Build Status](https://travis-ci.org/n1k0/readable-proxy.svg?branch=master)](https://travis-ci.org/n1k0/readable-proxy) [![Dependency Status](https://www.versioneye.com/user/projects/54f03dfc4f3108d1fa00000c/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54f03dfc4f3108d1fa00000c)
+
 Proxy server to retrieve a readable version of any provided url, powered by Node,
 [PhantomJS](http://phantom.org/) and [Readability.js](https://github.com/mozilla/readability).
 
