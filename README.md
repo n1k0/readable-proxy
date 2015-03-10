@@ -53,6 +53,7 @@ The HTTP Rest API is available under `/api`.
 ##### Optional parameters
 
 - `sanitize`: A *boolean string* to enable HTML sanitization (valid truthy boolean strings: "1", "on", "true", "yes", "y"; everything else will be considered falsy):
+- `userAgent`: A custom [User Agent](http://en.wikipedia.org/wiki/User_agent) string. By default, it will use the PhantomJS one.
 
 **Note:** Enabling contents sanitization loses Readability.js specific HTML semantics, though is probably safer for users if you plan to publish retrieved contents on a public website.
 
