@@ -131,6 +131,20 @@ describe("Tests", function() {
             .end(done);
         });
 
+        it("should apply custom user agent when provided", function(done) {
+          sandbox.stub(childProcess, "execFile", function(exec, args, cb) {
+            cb(null, "{}");
+          });
+
+          request(app)
+            .get("/api/get?url=http://invalid.test/&userAgent=custom+ua")
+            .expect(200)
+            .expect(function() {
+              expect(childProcess.execFile.getCall(0).args[1]).to.contain("custom ua");
+            })
+            .end(done);
+        });
+
         it("should return sanitized response when sanitize arg is passed", function(done) {
           sandbox.stub(childProcess, "execFile", function(exec, args, cb) {
             cb(null, JSON.stringify({content: "<p><script>alert('xss')</script>plop</p>"}));

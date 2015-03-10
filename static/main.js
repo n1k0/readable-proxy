@@ -3,12 +3,16 @@
 
   var q = document.querySelector.bind(document);
 
-  function injectReadableContents(url, sanitize, target) {
+  function injectReadableContents(params, target) {
     var req = new XMLHttpRequest();
-    req.open("GET", "/api/get?sanitize=" + (sanitize ? "yes" : "no") + "&url=" + encodeURIComponent(url), false);
+    var apiUrl = [
+      "/api/get?sanitize=" + (params.sanitize ? "yes" : "no"),
+      "url=" + encodeURIComponent(params.url),
+      "userAgent=" + encodeURIComponent(params.userAgent)
+    ].join("&");
+    req.open("GET", apiUrl, false);
     req.send(null);
     var jsonResponse = JSON.parse(req.responseText);
-    console.log(jsonResponse);
     q("#title").textContent = jsonResponse.title;
     q("#byline").textContent = jsonResponse.byline;
     q("#length").textContent = jsonResponse.length;
@@ -22,7 +26,11 @@
       event.preventDefault();
       var url = q("#url").value;
       q("#source").src = url;
-      injectReadableContents(url, q("#sanitize").checked, q("#target"));
+      injectReadableContents({
+        url: url,
+        sanitize: q("#sanitize").checked,
+        userAgent: q("#userAgent").value
+      }, q("#target"));
     });
   }
 

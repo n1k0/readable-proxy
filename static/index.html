@@ -15,9 +15,15 @@
       <div class="col-md-6">
         <form class="form-horizontal" id="form">
           <div class="form-group">
-            <label class="col-sm-1 control-label">URL</label>
+            <label class="col-sm-1 control-label">URL*</label>
             <div class="col-sm-11">
-              <input type="url" class="form-control" id="url" placeholder="http://">
+              <input type="url" class="form-control" id="url" placeholder="http://" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-1 control-label">UA</label>
+            <div class="col-sm-11">
+              <input type="text" class="form-control" id="userAgent" placeholder="Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.120 Safari/537.36">
             </div>
           </div>
           <div class="form-group">

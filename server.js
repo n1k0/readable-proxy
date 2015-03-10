@@ -36,13 +36,16 @@ app.get("/api", function(req, res) {
 });
 
 app.get("/api/get", function(req, res) {
-  var url = req.query.url, sanitize = boolArg(req.query.sanitize);
+  var url = req.query.url,
+      sanitize = boolArg(req.query.sanitize),
+      userAgent = req.query.userAgent;
   if (!url) {
     return res.status(400).json({error: "Missing url parameter"});
   }
-  scrape(url).then(function(result) {
+  scrape(url, {userAgent: userAgent}).then(function(result) {
     res.json(sanitize ? sanitizeResult(result) : result);
   }).catch(function(err) {
+    console.log(err);
     res.status(500).json(err);
   });
 });

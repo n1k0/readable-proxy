@@ -7,10 +7,14 @@ var Promise = require("bluebird");
 var readabilityPath = process.env.READABILITY_LIB_PATH ||
                       path.normalize(path.join(__dirname, "vendor", "Readability.js"));
 
-module.exports = function scrape(url) {
+module.exports = function scrape(url, options) {
+  options = options || {};
   if (!url) throw new Error("Missing url.");
   return new Promise(function(fulfill, reject) {
     var childArgs = [path.join(__dirname, "phantom-scrape.js"), url, readabilityPath];
+    if (options.userAgent) {
+      childArgs.push(options.userAgent);
+    }
     childProcess.execFile(binPath, childArgs, function(err, stdout, stderr) {
       if (err) {
         return reject(err);
