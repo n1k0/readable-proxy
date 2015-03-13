@@ -57,18 +57,31 @@ describe("Tests", function() {
       });
 
       scrape("http://invalid.test/").catch(function(err) {
-        expect(err.error.message).to.match(/Unable to parse JSON proxy response/);
+        expect(err.message).to.match(/Unable to parse JSON proxy response/);
+        done();
+      });
+    });
+
+    it("should reject on data extraction error", function(done) {
+      sandbox.stub(childProcess, "execFile", function(exec, args, cb) {
+        cb(null, JSON.stringify({error: {message: "Foo"}}));
+      });
+
+      scrape("http://invalid.test/").catch(function(err) {
+        expect(err).to.be.an.instanceOf(Error);
+        expect(err.message).eql("Foo");
         done();
       });
     });
 
     it("should fulfill with a valid json result", function(done) {
       sandbox.stub(childProcess, "execFile", function(exec, args, cb) {
-        cb(null, JSON.stringify({title: "plop"}));
+        cb(null, JSON.stringify({title: "plop", content: "plip"}));
       });
 
       scrape("http://invalid.test/").then(function(result) {
         expect(result.title).eql("plop");
+        expect(result.content).eql("plip");
         done();
       });
     });
@@ -127,6 +140,20 @@ describe("Tests", function() {
             .expect(200)
             .expect(function(res) {
               expect(res.body.title).eql("plop");
+            })
+            .end(done);
+        });
+
+        it("should return a server error on call error", function(done) {
+          sandbox.stub(childProcess, "execFile", function(exec, args, cb) {
+            cb(null, JSON.stringify({error: {message: "fail"}}));
+          });
+
+          request(app)
+            .get("/api/get?url=http://invalid.test/")
+            .expect(500)
+            .expect(function(res) {
+              expect(res.body.error.message).eql("fail");
             })
             .end(done);
         });

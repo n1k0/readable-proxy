@@ -4,6 +4,7 @@
   var q = document.querySelector.bind(document);
 
   function injectReadableContents(params, target) {
+    q("#error").classList.add("hide");
     var req = new XMLHttpRequest();
     var apiUrl = [
       "/api/get?sanitize=" + (params.sanitize ? "yes" : "no"),
@@ -13,12 +14,24 @@
     req.open("GET", apiUrl, false);
     req.send(null);
     var jsonResponse = JSON.parse(req.responseText);
-    q("#title").textContent = jsonResponse.title;
-    q("#byline").textContent = jsonResponse.byline;
-    q("#length").textContent = jsonResponse.length;
-    q("#dir").textContent = jsonResponse.dir;
-    q("#excerpt").textContent = jsonResponse.excerpt;
-    target.contentDocument.body.innerHTML = jsonResponse.content;
+    if (jsonResponse.error) {
+      q("#error").textContent = jsonResponse.error.message;
+      q("#error").classList.remove("hide");
+      q("#title").textContent = "";
+      q("#byline").textContent = "";
+      q("#length").textContent = "";
+      q("#dir").textContent = "";
+      q("#excerpt").textContent = "";
+      target.contentDocument.body.innerHTML = "";
+    } else {
+      q("#error").textContent = "";
+      q("#title").textContent = jsonResponse.title;
+      q("#byline").textContent = jsonResponse.byline;
+      q("#length").textContent = jsonResponse.length;
+      q("#dir").textContent = jsonResponse.dir;
+      q("#excerpt").textContent = jsonResponse.excerpt;
+      target.contentDocument.body.innerHTML = jsonResponse.content;
+    }
   }
 
   function init() {

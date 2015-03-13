@@ -46,7 +46,7 @@ app.get("/api/get", function(req, res) {
     res.json(sanitize ? sanitizeResult(result) : result);
   }).catch(function(err) {
     console.log(err);
-    res.status(500).json(err);
+    res.status(500).json({error: JSON.parse(JSON.stringify(err))});
   });
 });
 

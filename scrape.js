@@ -3,6 +3,7 @@ var phantomjs = require("phantomjs");
 var binPath = phantomjs.path;
 var path = require("path");
 var Promise = require("bluebird");
+var objectAssign = require("object-assign");
 
 var readabilityPath = process.env.READABILITY_LIB_PATH ||
                       path.normalize(path.join(__dirname, "vendor", "Readability.js"));
@@ -33,7 +34,7 @@ module.exports = function scrape(url, options) {
         error = response.error;
       }
       if (error) {
-        reject({error: error});
+        reject(objectAssign(new Error(), error));
       } else {
         fulfill(response);
       }
