@@ -22,12 +22,12 @@
     "express": "^4.11.*",
     "html-md": "^3.0.*",
     "markdown": "^0.5.*",
+    "object-assign": "^2.0.*",
     "phantomjs": "^1.9.*"
   },
   "devDependencies": {
     "chai": "^2.1.*",
     "mocha": "^2.1.*",
-    "object-assign": "^2.0.0",
     "sinon": "^1.12.*",
     "supertest": "^0.15.*"
   }
