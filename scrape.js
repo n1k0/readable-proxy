@@ -23,7 +23,11 @@ module.exports = function scrape(url, options) {
       try {
         response = JSON.parse(stdout);
       } catch (e) {
-        error = "Unable to parse JSON proxy response.";
+        error = {
+          message: "Unable to parse JSON proxy response.",
+          line: e.line,
+          stack: e.stack
+        };
       }
       if (response && response.error) {
         error = response.error;

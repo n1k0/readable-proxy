@@ -1,1 +1,4 @@
-require("./server").serve();
+module.exports = {
+  scrape: require("./scrape"),
+  server: require("./server")
+};

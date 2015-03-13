@@ -57,7 +57,7 @@ describe("Tests", function() {
       });
 
       scrape("http://invalid.test/").catch(function(err) {
-        expect(err.error).to.match(/Unable to parse JSON proxy response/);
+        expect(err.error.message).to.match(/Unable to parse JSON proxy response/);
         done();
       });
     });

@@ -81,6 +81,21 @@ Content sanitization disabled (default):
       "uri":"https://nicolas.perriault.net/code/2013/get-your-frontend-javascript-code-covered/"
     }
 
+### Usage from node
+
+#### scrape() function
+
+The `scrape` function scrapes a URL and returns a Promise with the JSON result object described above:
+
+```js
+var scrape = require("readable-proxy").scrape;
+var url = "https://nicolas.perriault.net/code/2013/get-your-frontend-javascript-code-covered/";
+
+scrape(url, {sanitize: true, userAgent: "My custom User-Agent string"})
+  .then(console.error.log(console))
+  .catch(console.error.bind(console));
+```
+
 Tests
 -----
 

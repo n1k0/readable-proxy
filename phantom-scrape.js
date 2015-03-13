@@ -34,7 +34,7 @@ page.open(url, function(status) {
   if (!page.injectJs(readabilityPath)) {
     exitWithError("Couldn't inject " + readabilityPath);
   }
-  outputJSON(page.evaluate(function(url, userAgent) {
+  outputJSON(page.evaluate(function(url, userAgent, pageContent) {
     var location = document.location;
     var uri = {
       spec: location.href,
@@ -45,11 +45,27 @@ page.open(url, function(status) {
     };
     try {
       var result = new Readability(uri, document).parse();
-      result.userAgent = userAgent;
+      if (result) {
+        result.userAgent = userAgent;
+      } else {
+        result = {
+          error: {
+            message: "Empty result from Readability.js.",
+            sourceHTML: pageContent || "Empty page content."
+          }
+        };
+      }
       return result;
     } catch (err) {
-      return {error: err};
+      return {
+        error: {
+          message: err.message,
+          line: err.line,
+          stack: err.stack,
+          sourceHTML: pageContent || "Empty page content."
+        }
+      };
     }
-  }, url, page.settings.userAgent));
+  }, url, page.settings.userAgent, page.content));
   phantom.exit();
 });
