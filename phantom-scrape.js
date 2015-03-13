@@ -27,6 +27,12 @@ if (userAgent) {
   page.settings.userAgent = userAgent;
 }
 
+// disable loading images as we don't use them
+page.settings.loadImages = false;
+
+// ensure we don't waste time trying to load slow/missing resources
+page.settings.resourceTimeout = 1000;
+
 page.open(url, function(status) {
   if (status !== "success") {
     return exitWithError("Unable to access " + url);
