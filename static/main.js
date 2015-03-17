@@ -22,6 +22,7 @@
       q("#length").textContent = "";
       q("#dir").textContent = "";
       q("#excerpt").textContent = "";
+      q("#logs").value = "";
       target.contentDocument.body.innerHTML = "";
     } else {
       q("#error").textContent = "";
@@ -30,6 +31,7 @@
       q("#length").textContent = jsonResponse.length;
       q("#dir").textContent = jsonResponse.dir;
       q("#excerpt").textContent = jsonResponse.excerpt;
+      q("#logs").value = (jsonResponse.consoleLogs || []).join("\n");
       target.contentDocument.body.innerHTML = jsonResponse.content;
     }
   }

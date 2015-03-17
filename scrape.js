@@ -35,6 +35,8 @@ module.exports = function scrape(url, options) {
       }
       if (error) {
         reject(objectAssign(new Error(), error));
+      } else if (!response) {
+        reject(new Error("Empty scraped response."));
       } else {
         fulfill(response);
       }
