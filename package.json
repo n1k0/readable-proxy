@@ -1,6 +1,6 @@
 {
   "name": "readable-proxy",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Node service attempting to fetch readable contents from any URL.",
   "main": "index.js",
   "scripts": {
