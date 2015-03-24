@@ -10,7 +10,7 @@ var consoleLogs = [];
 phantom.onError = page.onError = function(){};
 
 function exitWithError(message) {
-  outputJSON({error: message});
+  outputJSON({error: {message: message}});
   phantom.exit();
 }
 
