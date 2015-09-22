@@ -67,7 +67,8 @@ Content sanitization enabled:
       "content":"<p><strong>So finally you&#39;re <a href=\"https://nicolas.perriault.net/code/2013/testing-frontend-javascript-code-using-mocha-chai-and-sinon/\">testing",
       "length":2867,
       "title":"Get your Frontend JavaScript Code Covered | Code",
-      "uri":"https://nicolas.perriault.net/code/2013/get-your-frontend-javascript-code-covered/"
+      "uri":"https://nicolas.perriault.net/code/2013/get-your-frontend-javascript-code-covered/",
+      "isProbablyReaderable": true
     }
 
 Content sanitization disabled (default):
@@ -78,8 +79,11 @@ Content sanitization disabled (default):
       "content":"<div id=\"readability-page-1\" class=\"page\"><section class=\"\">\n<p><strong>So finally you're…",
       "length":3851,
       "title":"Get your Frontend JavaScript Code Covered | Code",
-      "uri":"https://nicolas.perriault.net/code/2013/get-your-frontend-javascript-code-covered/"
+      "uri":"https://nicolas.perriault.net/code/2013/get-your-frontend-javascript-code-covered/",
+      "isProbablyReaderable": true
     }
+
+Note: the `isProbablyReaderable` property tells if Readability has determined if page contents were parseable or not.
 
 ### Usage from node
 
