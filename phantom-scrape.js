@@ -31,9 +31,12 @@ function runReadability(url, userAgent, pageContent) {
     pathBase: location.protocol + "//" + location.host + location.pathname.substr(0, location.pathname.lastIndexOf("/") + 1)
   };
   try {
-    var result = new Readability(uri, document).parse();
+    var readabilityObj = new Readability(uri, document);
+    var isProbablyReaderable = readabilityObj.isProbablyReaderable();
+    var result = readabilityObj.parse();
     if (result) {
       result.userAgent = userAgent;
+      result.isProbablyReaderable = isProbablyReaderable;
     } else {
       result = {
         error: {
