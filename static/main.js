@@ -17,6 +17,7 @@
     if (jsonResponse.error) {
       q("#error").textContent = jsonResponse.error.message;
       q("#error").classList.remove("hide");
+      q("#readerable").textContent = "";
       q("#title").textContent = "";
       q("#byline").textContent = "";
       q("#length").textContent = "";
@@ -26,6 +27,7 @@
       target.contentDocument.body.innerHTML = "";
     } else {
       q("#error").textContent = "";
+      q("#readerable").textContent = jsonResponse.isProbablyReaderable;
       q("#title").textContent = jsonResponse.title;
       q("#byline").textContent = jsonResponse.byline;
       q("#length").textContent = jsonResponse.length;
