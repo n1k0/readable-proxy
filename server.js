@@ -42,12 +42,18 @@ app.get("/api/get", function(req, res) {
   if (!url) {
     return res.status(400).json({error: "Missing url parameter"});
   }
-  scrape(url, {userAgent: userAgent}).then(function(result) {
-    res.json(sanitize ? sanitizeResult(result) : result);
-  }).catch(function(err) {
-    console.log(err);
+  function handleError(err) {
+    console.error(err);
     res.status(500).json({error: {message: err.message}});
-  });
+  }
+  scrape(url, {userAgent: userAgent})
+    .then(function(result) {
+      if (!result) {
+        throw new Error("No scraped result received.");
+      }
+      res.json(sanitize ? sanitizeResult(result) : result);
+    })
+    .catch(handleError);
 });
 
 exports.serve = function() {
