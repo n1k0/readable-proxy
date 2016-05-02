@@ -23,7 +23,7 @@
     "html-md": "^3.0.*",
     "markdown": "^0.5.*",
     "object-assign": "^2.0.*",
-    "phantomjs": "^1.9.*"
+    "phantomjs-prebuilt": "^2.1.*"
   },
   "devDependencies": {
     "chai": "^2.1.*",
