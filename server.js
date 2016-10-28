@@ -2,6 +2,7 @@ var scrape = require("./scrape");
 var sanitizeResult = require("./sanitize").sanitizeResult;
 var express = require("express");
 var pkgInfo = require("./package.json");
+var cheerio = require("cheerio");
 
 var app = express();
 exports.app = app;
@@ -51,7 +52,16 @@ app.get("/api/get", function(req, res) {
       if (!result) {
         throw new Error("No scraped result received.");
       }
-      res.json(sanitize ? sanitizeResult(result) : result);
+
+      var sanitizedResult = sanitizeResult(result);
+      var $ = cheerio.load(sanitizedResult.content);
+      var rawText = $('*').contents().map(function() {
+          return (this.type === 'text') ? $(this).text() + ' ' : '';
+      }).get().join('');
+
+      result.rawText = rawText.trim();
+
+      res.json(sanitize ? sanitizedResult : result);
     })
     .catch(handleError);
 });

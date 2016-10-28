@@ -182,6 +182,7 @@ describe("Tests", function() {
             .expect(200)
             .expect(function(res) {
               expect(res.body.content).eql("<p>plop</p>");
+              expect(res.body.rawText).eql("plop");
             })
             .end(done);
         });
